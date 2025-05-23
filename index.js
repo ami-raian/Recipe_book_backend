@@ -10,36 +10,36 @@ const MONGODB_URI = `${process.env.MONGODB_URI}`;
 // CORS SETUP
 // app.use(cors());
 
-// app.use(
-//   cors({
-//     // origin: "http://localhost:5173", // Vite frontend
-//     origin: "https://recipe-book-front-end.vercel.app", // Vite production
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: ["Content-Type"],
-//   })
-// );
-
-const allowedOrigins = [
-  "http://localhost:5173", // Vite dev
-  "https://recipe-book-front-end.vercel.app", // Production
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like Postman)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
-    },
+    // origin: "http://localhost:5173", // Vite frontend
+    origin: "https://recipe-book-front-end.vercel.app", // Vite production
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
-    credentials: true, // If you're using cookies or auth headers
   })
 );
+
+// const allowedOrigins = [
+//   "http://localhost:5173", // Vite dev
+//   "https://recipe-book-front-end.vercel.app", // Production
+// ];
+
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       // Allow requests with no origin (like Postman)
+//       if (!origin) return callback(null, true);
+//       if (allowedOrigins.includes(origin)) {
+//         return callback(null, true);
+//       } else {
+//         return callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type"],
+//     credentials: true, // If you're using cookies or auth headers
+//   })
+// );
 
 // BODY PARSER
 app.use(express.json()); // built-in body parser
