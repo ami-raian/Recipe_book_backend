@@ -8,16 +8,16 @@ const PORT = process.env.PORT || 5000;
 const MONGODB_URI = `${process.env.MONGODB_URI}`;
 
 // CORS SETUP
-// app.use(cors());
+app.use(cors());
 
-app.use(
-  cors({
-    // origin: "http://localhost:5173", // Vite frontend
-    origin: "https://recipe-book-front-end.vercel.app", // Vite production
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+// app.use(
+//   cors({
+//     // origin: "http://localhost:5173", // Vite frontend
+//     origin: "https://recipe-book-front-end.vercel.app", // Vite production
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
 
 // const allowedOrigins = [
 //   "http://localhost:5173", // Vite dev
