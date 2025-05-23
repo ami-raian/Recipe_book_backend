@@ -1,11 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const MONGODB_URI = `${process.env.MONGODB_URI}`;
 
-// ─── 1. CORS SETUP ───────────────────────────────────────────────
+// CORS SETUP
 app.use(cors());
 // app.use(
 //   cors({
@@ -16,13 +18,10 @@ app.use(cors());
 //   })
 // );
 
-// ─── 2. BODY PARSER ───────────────────────────────────────────────
+// BODY PARSER
 app.use(express.json()); // built-in body parser
 
-// ─── 3. CONNECT TO MONGODB ────────────────────────────────────────
-const MONGODB_URI =
-  "mongodb+srv://naimauddin23:1eHr4LwMKz9ne77t@cluster0.cow9yu9.mongodb.net/recipe-book-app?retryWrites=true&w=majority";
-
+// CONNECT TO MONGODB
 mongoose
   .connect(MONGODB_URI, {
     useNewUrlParser: true,
@@ -34,19 +33,17 @@ mongoose
     process.exit(1);
   });
 
-// ─── 4. DEFINE MODEL ───────────────────────────────────────────────
-// Using schema-less model (flexible fields)
+// DEFINE MODEL
 const RecipeSchema = new mongoose.Schema({}, { strict: false });
 const Recipe = mongoose.model("Recipe", RecipeSchema, "recipes");
 
-// ─── 5. ROUTES ─────────────────────────────────────────────────────
-
-// Health check
+// ROUTES:
+// Check if server is running
 app.get("/", (req, res) => {
   res.send("<h1>🍽️ Recipe Book API</h1><p>Welcome to the API</p>");
 });
 
-// Create
+// CREATE
 app.post("/recipes", async (req, res) => {
   try {
     const recipe = await Recipe.create(req.body);
@@ -56,7 +53,7 @@ app.post("/recipes", async (req, res) => {
   }
 });
 
-// Read all
+// GET all
 app.get("/recipes", async (req, res) => {
   try {
     const recipes = await Recipe.find();
@@ -66,7 +63,7 @@ app.get("/recipes", async (req, res) => {
   }
 });
 
-// Read one
+// GET one
 app.get("/recipes/:id", async (req, res) => {
   try {
     console.log(req.params.id, "read one");
@@ -78,7 +75,7 @@ app.get("/recipes/:id", async (req, res) => {
   }
 });
 
-// Update
+// PUT update
 app.put("/recipes/:id", async (req, res) => {
   try {
     const updated = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
@@ -92,7 +89,7 @@ app.put("/recipes/:id", async (req, res) => {
   }
 });
 
-// Delete
+// DELETE
 app.delete("/recipes/:id", async (req, res) => {
   try {
     const deleted = await Recipe.findByIdAndDelete(req.params.id);
@@ -103,7 +100,7 @@ app.delete("/recipes/:id", async (req, res) => {
   }
 });
 
-// ─── 6. START SERVER ───────────────────────────────────────────────
+// START SERVER
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
