@@ -6,14 +6,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── 1. CORS SETUP ───────────────────────────────────────────────
-app.use(
-  cors({
-    // origin: "http://localhost:5173", // Vite frontend
-    origin: "https://recipe-book-front-end.vercel.app", // Vite production
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     // origin: "http://localhost:5173", // Vite frontend
+//     origin: "https://recipe-book-front-end.vercel.app", // Vite production
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
 
 // ─── 2. BODY PARSER ───────────────────────────────────────────────
 app.use(express.json()); // built-in body parser
